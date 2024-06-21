@@ -1,6 +1,6 @@
-window.addEventListener("keydown", (e) => {
+// generic play sound
+const playSound = (key) => {
   let sound;
-  const key = e.key.toUpperCase();
   switch (key) {
     case "A":
       sound = "clap";
@@ -44,7 +44,18 @@ window.addEventListener("keydown", (e) => {
       }, 50);
     });
   }
-});
+};
 
 const keyButtons = document.querySelectorAll("[data-key]");
-console.log(keyButtons);
+
+keyButtons.forEach((kb) => {
+  ["click", "touch"].forEach((event) => {
+    kb.addEventListener(event, (_) => {
+      playSound(String.fromCharCode(kb.dataset.key));
+    });
+  });
+});
+
+window.addEventListener("keydown", (e) => {
+  playSound(e.key.toUpperCase());
+});
