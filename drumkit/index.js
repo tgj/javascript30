@@ -49,7 +49,7 @@ const playSound = (key) => {
 const keyButtons = document.querySelectorAll("[data-key]");
 
 keyButtons.forEach((kb) => {
-  ["click", "touch"].forEach((event) => {
+  ["click", "touchstart"].forEach((event) => {
     kb.addEventListener(event, (_) => {
       playSound(String.fromCharCode(kb.dataset.key));
     });
