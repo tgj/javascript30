@@ -51,7 +51,7 @@ const playSound = (key) => {
 const keyButtons = document.querySelectorAll("[data-key]");
 
 keyButtons.forEach((kb) => {
-  ["click", "touch"].forEach((event) => {
+  ["click", "touchend"].forEach((event) => {
     kb.addEventListener(
       event,
       (_) => {
