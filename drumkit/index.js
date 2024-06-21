@@ -45,3 +45,6 @@ window.addEventListener("keydown", (e) => {
     });
   }
 });
+
+const keyButtons = document.querySelectorAll("[data-key]");
+console.log(keyButtons);
