@@ -1,3 +1,6 @@
+// remove 300ms delay on mobile
+document.documentElement.style = "touch-action: manipulation;";
+
 const audioMap = new Map();
 
 const keys = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
