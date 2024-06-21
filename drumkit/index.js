@@ -1,58 +1,64 @@
-// generic play sound
+const audioMap = new Map();
+
+const keys = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
+const sounds = [
+  "clap",
+  "hihat",
+  "kick",
+  "openhat",
+  "boom",
+  "ride",
+  "snare",
+  "tom",
+  "tink",
+];
+
+for (let i = 0; i < keys.length; i++) {
+  const audio = new Audio(`sounds/${sounds[i]}.wav`);
+  audio.preload = "auto";
+  audio.load();
+  audioMap.set(keys[i], audio);
+}
+
 const playSound = (key) => {
   let sound;
   switch (key) {
     case "A":
-      sound = "clap";
-      break;
     case "S":
-      sound = "hihat";
-      break;
     case "D":
-      sound = "kick";
-      break;
     case "F":
-      sound = "openhat";
-      break;
     case "G":
-      sound = "boom";
-      break;
     case "H":
-      sound = "ride";
-      break;
     case "J":
-      sound = "snare";
-      break;
     case "K":
-      sound = "tom";
-      break;
     case "L":
-      sound = "tink";
       break;
-    default: // ignore class
+    default:
+      return;
   }
-
-  if (sound) {
-    const audio = new Audio(`sounds/${sound}.wav`);
-    const keyCode = key.charCodeAt();
-    const keyButton = document.querySelector(`[data-key="${keyCode}"]`);
-    const playingClass = "playing";
-    keyButton.classList.add(playingClass);
-    audio.play().then(() => {
-      setTimeout(() => {
-        keyButton.classList.remove(playingClass);
-      }, 50);
-    });
-  }
+  const keyCode = key.charCodeAt();
+  const keyButton = document.querySelector(`[data-key="${keyCode}"]`);
+  const playingClass = "playing";
+  keyButton.classList.add(playingClass);
+  const audio = audioMap.get(key).cloneNode();
+  audio.play().then(() => {
+    setTimeout(() => {
+      keyButton.classList.remove(playingClass);
+    }, 50);
+  });
 };
 
 const keyButtons = document.querySelectorAll("[data-key]");
 
 keyButtons.forEach((kb) => {
   ["click", "touchstart"].forEach((event) => {
-    kb.addEventListener(event, (_) => {
-      playSound(String.fromCharCode(kb.dataset.key));
-    });
+    kb.addEventListener(
+      event,
+      (_) => {
+        playSound(String.fromCharCode(kb.dataset.key));
+      },
+      { passive: true }
+    );
   });
 });
 
